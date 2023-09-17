@@ -1,6 +1,6 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
 import './index.css'
+import ReactDOM from 'react-dom/client'
 import {
   createBrowserRouter,
   RouterProvider,
@@ -8,6 +8,10 @@ import {
 import Home from './Main/Home';
 import Order from './component/Order/Order';
 import Products from './component/Products/Products';
+import CartProductsLoader from './loaders/CartProductsLoader';
+import Login from './component/login/Login';
+import Register from './component/register/Register';
+import AuthProviders from './providers/AuthProviders';
 
 
 const router = createBrowserRouter([
@@ -18,17 +22,26 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Products></Products>,
-        loader:()=>fetch('data.json')
+        loader:CartProductsLoader
       },
       {
         path: "/order",
         element: <Order></Order>,
+        loader:CartProductsLoader
+      },
+      {
+        path: "/login",
+        element: <Login></Login>,
+      },
+      {
+        path: "/register",
+        element: <Register></Register>,
       },
     ],
   },
 ]);
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>,
+  <AuthProviders>
+  <RouterProvider router={router} />
+  </AuthProviders>
 )
